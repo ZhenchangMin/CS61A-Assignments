@@ -61,12 +61,11 @@ class VendingMachine:
         E.g., Current candy stock: 3
         """
         "*** YOUR CODE HERE ***"
+        self.stock += n;
         if self.stock == 0:
             return 'Nothing left to vend. Please restock.';
         else:
-            self.stock += n;
-            return 'Current ' + self.product + ' stock: ' + self.stock;
-
+            return 'Current ' + self.product + ' stock: ' + str(self.stock);
     def add_funds(self, n):
         """If the machine is out of stock, return a message informing the user to restock
         (and return their n dollars).
@@ -79,9 +78,9 @@ class VendingMachine:
         """
         "*** YOUR CODE HERE ***"
         if self.stock == 0:
-            return 'Nothing left to vend. Please restock. Here is your $' + n + '.';
+            return 'Nothing left to vend. Please restock. Here is your $' + str(n) + '.';
         self.balance += n;
-        return 'Current balance: $' + self.balance;
+        return 'Current balance: $' + str(self.balance);
 
     def vend(self):
         """Dispense the product if there is sufficient stock and funds and
@@ -98,9 +97,16 @@ class VendingMachine:
         if self.stock == 0:
             return 'Nothing left to vend. Please restock.';
         elif self.balance < self.price:
-            return 'Please add $' + self.price - self.balance +' more funds.';
+            return 'Please add $' + str(self.price - self.balance) +' more funds.';
         else:
-            return 'Here is your ' + self.product + ' and $'+ self.balance - self.price + ' change.';
+            self.stock -= 1;
+            if self.balance == self.price:
+                self.balance = 0;
+                return 'Here is your ' + self.product + '.';
+            self.balance -= self.price;
+            x = self.balance;
+            self.balance = 0;
+            return 'Here is your ' + self.product + ' and $'+ str(x) + ' change.';
 
 
 def store_digits(n):
